@@ -77,13 +77,7 @@ class SearchAPIView(generics.ListAPIView):
     filter_backends = (filter.SearchFilter,)
     search_fields = ['name']
    
-# to delete duplcates
-# for row in AddToCart.objects.all().reverse():
-#     if AddToCart.objects.filter(name=row.name).count() > 1:
-#         row.delete()
-
 class CsrfExemptSessionAuthentication(SessionAuthentication):
-
     def enforce_csrf(self, request):
         return  # To not perform the csrf check previously happening
 
@@ -94,9 +88,6 @@ class UserViewSet(viewsets.ModelViewSet):
     
 
     def retrieve(self, request: Request, *args, **kwargs):
-        """
-        If provided 'pk' is "me" then return the current user.
-        """
         if kwargs.get('pk') == 'me':
             return Response(self.get_serializer(request.user).data)
         return super().retrieve(request, args, kwargs)
@@ -147,11 +138,3 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
 categories = Category.objects.filter(image='')
-cats =['Accessories', 'Apparel', 'Baby Products',
- 'Beauty', 'Cameras', 'Car & Motorbike', 'Diapers & Wipes',
-  'Gourmet', 'Handbags', 'Health', 'Home Entertainment',
-   'Household Supplies', 'Jewellery', 'Laptops', 'Luggage',
-    'Mobiles', 'Movies & TV Shows', 'Music', 'Musical Instruments',
-     'Office Supplies', 'Personal Care Appliances', 'Pet Supplies', 
-     'Shoes', 'Sports', 'Sunglasses', 'Televisions', 'Toys & Games', 
-     'Travel Accessories', 'Video Games', 'Watches'] 
